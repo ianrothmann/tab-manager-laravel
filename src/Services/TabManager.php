@@ -2,11 +2,9 @@
 
 namespace StianScholtz\TabManager\Services;
 
-
 use Illuminate\Session\SessionManager;
 use Illuminate\Session\Store;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\URL;
 
 class TabManager
 {
@@ -39,6 +37,7 @@ class TabManager
     private function setTabId(): ?string
     {
         $this->tabId = request()->cookie('tab_id');
+
         return $this->tabId;
     }
 
@@ -48,7 +47,7 @@ class TabManager
             //If there is a session for the current tabId then we do not need to set a default session.
             $exists = $this->has();
 
-            if (!$exists) {
+            if (! $exists) {
                 $this->setDefaultSession();
             }
 
@@ -56,9 +55,11 @@ class TabManager
         }
     }
 
-    public function check(): ?string {
+    public function check(): ?string
+    {
         $tabId = $this->setTabId();
         $this->updateSession();
+
         return $tabId;
     }
 
@@ -76,7 +77,7 @@ class TabManager
      */
     public function get($key = null)
     {
-        if (!($tabId = $this->current())) {
+        if (! ($tabId = $this->current())) {
             return null;
         }
 
@@ -103,9 +104,10 @@ class TabManager
      */
     public function has($key = null): bool
     {
-        if (!($tabId = $this->current())) {
+        if (! ($tabId = $this->current())) {
             return false;
         }
+
         return session()->has($this->getKey($key));
     }
 
@@ -125,7 +127,7 @@ class TabManager
         $tabs = session($this->key . '.tabs', []);
         $current = $this->get();
 
-        if (!$tabs || count($tabs) === 0 || !$current) {
+        if (! $tabs || count($tabs) === 0 || ! $current) {
             return null;
         }
 

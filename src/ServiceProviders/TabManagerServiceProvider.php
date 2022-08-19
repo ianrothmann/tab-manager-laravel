@@ -2,14 +2,12 @@
 
 namespace StianScholtz\TabManager\ServiceProviders;
 
-
 use Illuminate\Routing\Router;
 use Illuminate\Session\Middleware\StartSession;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use StianScholtz\TabManager\Middleware\CheckForTabId;
 use StianScholtz\TabManager\Services\TabManager;
-
 
 class TabManagerServiceProvider extends PackageServiceProvider
 {
@@ -22,14 +20,15 @@ class TabManagerServiceProvider extends PackageServiceProvider
 
     public function packageRegistered()
     {
-        if (!$this->app->resolved('tab-manager')) {
-            $this->app->singleton('tab-manager', function() {
-                return new TabManager;
+        if (! $this->app->resolved('tab-manager')) {
+            $this->app->singleton('tab-manager', function () {
+                return new TabManager();
             });
         }
     }
 
-    public function packageBooted() {
+    public function packageBooted()
+    {
         /**
          * @var Router $router
          */
@@ -42,7 +41,7 @@ class TabManagerServiceProvider extends PackageServiceProvider
         //Set priority to ensure the middleware executes after the session have been initialized
         $router->middlewarePriority = [
             StartSession::class,
-            CheckForTabId::class
+            CheckForTabId::class,
         ];
     }
 }

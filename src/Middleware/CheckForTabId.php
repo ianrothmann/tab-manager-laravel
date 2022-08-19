@@ -1,8 +1,6 @@
 <?php
 
-
 namespace StianScholtz\TabManager\Middleware;
-
 
 use Closure;
 use Illuminate\Http\Request;
