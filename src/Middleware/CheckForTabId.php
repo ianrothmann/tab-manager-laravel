@@ -18,7 +18,7 @@ class CheckForTabId
     {
         $response = $next($request);
 
-        if(auth()->check()) {
+        if (auth()->check()) {
             $tabId = \StianScholtz\TabManager\Facades\TabManager::check();
         }
 //        $response->headers->set('Server-Timing', 'tab_id;desc="' . TabManager::getInstance()->current() . '";');
