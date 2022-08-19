@@ -3,6 +3,7 @@
 namespace StianScholtz\TabManager\ServiceProviders;
 
 use Illuminate\Routing\Router;
+use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -38,9 +39,9 @@ class TabManagerServiceProvider extends PackageServiceProvider
         //or others are last the in web group as per their requirements
         $router->prependMiddlewareToGroup('web', CheckForTabId::class);
 
-        //Set priority to ensure the middleware executes after the session have been initialized
+        //Set priority to ensure the middleware executes after the session have been initialized and authenticated
         $router->middlewarePriority = [
-            StartSession::class,
+            AuthenticateSession::class,
             CheckForTabId::class,
         ];
     }
