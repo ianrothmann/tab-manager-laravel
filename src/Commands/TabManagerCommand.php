@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace StianScholtz\TabManager\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class TabManagerCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'tab-manager-laravel';
 
     public $description = 'My command';
 
