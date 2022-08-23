@@ -4,7 +4,6 @@ namespace StianScholtz\TabManager\ServiceProviders;
 
 use Illuminate\Routing\Router;
 use Illuminate\Session\Middleware\AuthenticateSession;
-use Illuminate\Session\Middleware\StartSession;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use StianScholtz\TabManager\Middleware\TabManagerMiddleware;
