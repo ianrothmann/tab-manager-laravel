@@ -20,7 +20,7 @@ class TabManagerServiceProvider extends PackageServiceProvider
 
     public function packageRegistered()
     {
-        if (!$this->app->resolved('tab-manager')) {
+        if (! $this->app->resolved('tab-manager')) {
             $this->app->singleton('tab-manager', function () {
                 return new TabManagerService();
             });
@@ -40,7 +40,7 @@ class TabManagerServiceProvider extends PackageServiceProvider
         $router->middlewarePriority = [
             StartSession::class,
             AuthenticateSession::class,
-            TabManagerMiddleware::class
+            TabManagerMiddleware::class,
         ];
     }
 }

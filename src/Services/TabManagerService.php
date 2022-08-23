@@ -46,7 +46,7 @@ class TabManagerService
             //If there is a session for the current tabId then we do not need to set a default session.
             $exists = $this->has();
 
-            if (!$exists) {
+            if (! $exists) {
                 $this->setDefaultSession();
             }
 
@@ -76,7 +76,7 @@ class TabManagerService
      */
     public function get($key = null)
     {
-        if (!($tabId = $this->current())) {
+        if (! ($tabId = $this->current())) {
             return null;
         }
 
@@ -103,7 +103,7 @@ class TabManagerService
      */
     public function has($key = null): bool
     {
-        if (!($tabId = $this->current())) {
+        if (! ($tabId = $this->current())) {
             return false;
         }
 
@@ -117,7 +117,7 @@ class TabManagerService
     {
         $tabs = session($this->key . '.tabs', []);
 
-        if (!$tabs || count($tabs) === 0) {
+        if (! $tabs || count($tabs) === 0) {
             return null;
         }
 
@@ -127,10 +127,10 @@ class TabManagerService
             })
             ->first(function ($tab) {
                 $path = pathinfo($tab['url']);
+
                 return request()->is($path);
             });
     }
-
 
     private function setDefaultSession(): void
     {
