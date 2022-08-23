@@ -5,7 +5,7 @@ namespace StianScholtz\TabManager\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \StianScholtz\TabManager\Services\TabManager
+ * @see \StianScholtz\TabManager\Services\TabManagerService
  */
 class TabManager extends Facade
 {

@@ -4,8 +4,9 @@ namespace StianScholtz\TabManager\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use StianScholtz\TabManager\Facades\TabManager;
 
-class CheckForTabId
+class TabManagerMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,12 +17,11 @@ class CheckForTabId
      */
     public function handle($request, Closure $next)
     {
+        $tabId = TabManager::check();
+
         $response = $next($request);
 
-        if(auth()->check()) {
-            $tabId = \StianScholtz\TabManager\Facades\TabManager::check();
-        }
-//        $response->headers->set('Server-Timing', 'tab_id;desc="' . TabManager::getInstance()->current() . '";');
+        //        $response->headers->set('Server-Timing', 'tab_id;desc="' . TabManager::getInstance()->current() . '";');
 
         return $response;
     }

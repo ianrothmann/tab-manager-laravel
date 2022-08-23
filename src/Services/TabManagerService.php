@@ -6,7 +6,7 @@ use Illuminate\Session\SessionManager;
 use Illuminate\Session\Store;
 use Illuminate\Support\Arr;
 
-class TabManager
+class TabManagerService
 {
     private string $key;
     private ?string $tabId;
@@ -14,7 +14,6 @@ class TabManager
     public function __construct()
     {
         $this->key = config('tab-manager.session.key', 'tab_manager');
-        echo 'Constructed';
     }
 
     private function __clone()
@@ -47,7 +46,7 @@ class TabManager
             //If there is a session for the current tabId then we do not need to set a default session.
             $exists = $this->has();
 
-            if (! $exists) {
+            if (!$exists) {
                 $this->setDefaultSession();
             }
 
@@ -77,7 +76,7 @@ class TabManager
      */
     public function get($key = null)
     {
-        if (! ($tabId = $this->current())) {
+        if (!($tabId = $this->current())) {
             return null;
         }
 
@@ -104,41 +103,40 @@ class TabManager
      */
     public function has($key = null): bool
     {
-        if (! ($tabId = $this->current())) {
+        if (!($tabId = $this->current())) {
             return false;
         }
 
         return session()->has($this->getKey($key));
     }
 
-    private function setDefaultSession(): void
-    {
-        $parent = $this->getParent();
-        $defaultSession = $parent ?? [];
-        $parent && dd('parent', $parent);//TODO: Remove line
-        session()->put($this->key . '.tabs.' . $this->current(), $defaultSession);
-    }
-
     /**
      * @return array|null
      */
-    private function getParent(): ?array
+    public function getLatestForCurrentURL(): ?array
     {
         $tabs = session($this->key . '.tabs', []);
-        $current = $this->get();
 
-        if (! $tabs || count($tabs) === 0 || ! $current) {
+        if (!$tabs || count($tabs) === 0) {
             return null;
         }
 
         return collect($tabs)
-            ->where(function ($tab) use ($current) {
-                return $tab['url'] === $current['url'];
-            })
             ->sortByDesc(function ($tab) {
                 return $tab['last_accessed'];
             })
-            ->first();
+            ->first(function ($tab) {
+                $path = pathinfo($tab['url']);
+                return request()->is($path);
+            });
+    }
+
+
+    private function setDefaultSession(): void
+    {
+        $parent = $this->getLatestForCurrentURL();
+        $defaultSession = $parent ?? [];
+        session()->put($this->key . '.tabs.' . $this->current(), $defaultSession);
     }
 
     private function touch(): void
