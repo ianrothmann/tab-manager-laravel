@@ -3,8 +3,8 @@
 namespace StianScholtz\TabManager\ServiceProviders;
 
 use Illuminate\Routing\Router;
-use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Session\Middleware\AuthenticateSession;
+use Illuminate\Session\Middleware\StartSession;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use StianScholtz\TabManager\Middleware\TabManagerMiddleware;
@@ -21,7 +21,7 @@ class TabManagerServiceProvider extends PackageServiceProvider
 
     public function packageRegistered()
     {
-        if (!$this->app->resolved('tab-manager')) {
+        if (! $this->app->resolved('tab-manager')) {
             $this->app->singleton('tab-manager', function () {
                 return new TabManagerService();
             });
