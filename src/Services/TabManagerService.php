@@ -89,7 +89,7 @@ class TabManagerService
      */
     public function set($key, $value): void
     {
-        //Check for tabId and not tab. tab will be empty array on initial requests
+        //Check for $tabId and not tab because $tab will be empty array on initial requests
         if ($tabId = $this->current()) {
             $tab = $this->get();
             Arr::set($tab, $key, $value);
@@ -142,7 +142,6 @@ class TabManagerService
     private function touch(): void
     {
         $this->set('last_accessed', now()->toDateTimeString());
-        $this->set('prev_url', $this->get('url'));
         $this->set('url', request()->url());
     }
 }
