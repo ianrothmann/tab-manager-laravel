@@ -19,10 +19,6 @@ class TabManagerMiddleware
     {
         $tabId = TabManager::check();
 
-        $response = $next($request);
-
-        //        $response->headers->set('Server-Timing', 'tab_id;desc="' . TabManager::getInstance()->current() . '";');
-
-        return $response;
+        return $next($request);
     }
 }

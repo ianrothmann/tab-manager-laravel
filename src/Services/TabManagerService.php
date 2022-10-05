@@ -46,7 +46,7 @@ class TabManagerService
             //If there is a session for the current tabId then we do not need to set a default session.
             $exists = $this->has();
 
-            if (! $exists) {
+            if (!$exists) {
                 $this->setDefaultSession();
             }
 
@@ -76,7 +76,7 @@ class TabManagerService
      */
     public function get($key = null)
     {
-        if (! ($tabId = $this->current())) {
+        if (!($tabId = $this->current())) {
             return null;
         }
 
@@ -84,26 +84,34 @@ class TabManagerService
     }
 
     /**
-     * @param string|int|null $key
+     * @param array|string|int $key
      * @param mixed $value
      */
-    public function set($key, $value): void
+    public function set($key, $value = null): void
     {
         //Check for $tabId and not tab because $tab will be empty array on initial requests
         if ($tabId = $this->current()) {
             $tab = $this->get();
-            Arr::set($tab, $key, $value);
+
+            if (!is_array($key)) {
+                $key = [$key => $value];
+            }
+
+            foreach ($key as $arrayKey => $arrayValue) {
+                Arr::set($tab, $arrayKey, $arrayValue);
+            }
+
             session()->put($this->key . '.tabs.' . $tabId, $tab);
         }
     }
 
     /**
-     * @param string|array $key
+     * @param string|array|null $key
      * @return bool
      */
     public function has($key = null): bool
     {
-        if (! ($tabId = $this->current())) {
+        if (!($tabId = $this->current())) {
             return false;
         }
 
@@ -115,33 +123,56 @@ class TabManagerService
      */
     public function getLatestForCurrentURL(): ?array
     {
-        $tabs = session($this->key . '.tabs', []);
+        return $this->getLatestByPath(request()->path());
+    }
 
-        if (! $tabs || count($tabs) === 0) {
+    /**
+     * @return array|null
+     */
+    public function getLatestForPrevUrl(): ?array
+    {
+        $prevUrl = \URL::previous();
+
+        if (!$prevUrl || !($path = parse_url($prevUrl)['path'] ?? null)) {
             return null;
         }
 
+        return $this->getLatestByPath($path);
+    }
+
+    private function getLatestByPath(string $path): ?array
+    {
+        $tabs = session($this->key . '.tabs', []);
+
+        if (!$tabs || count($tabs) === 0) {
+            return null;
+        }
+
+        $path = trim($path, '/');
+
         return collect($tabs)
             ->sortByDesc(function ($tab) {
-                return $tab['last_accessed'];
+                return $tab['last_accessed_at'];
             })
-            ->first(function ($tab) {
-                $path = pathinfo($tab['url']);
+            ->first(function ($tab) use ($path) {
+                $urlPath = parse_url($tab['url'])['path'];
 
-                return request()->is($path);
+                return $path === trim($urlPath, '/');
             });
     }
 
     private function setDefaultSession(): void
     {
-        $parent = $this->getLatestForCurrentURL();
+        $parent = $this->getLatestForCurrentURL() ?? $this->getLatestForPrevUrl();
+        $current = $this->current();
         $defaultSession = $parent ?? [];
-        session()->put($this->key . '.tabs.' . $this->current(), $defaultSession);
+        $defaultSession['tab_id'] = $current;
+        session()->put($this->key . '.tabs.' . $current, $defaultSession);
     }
 
     private function touch(): void
     {
-        $this->set('last_accessed', now()->toDateTimeString());
+        $this->set('last_accessed_at', now()->toDateTimeString());
         $this->set('url', request()->url());
     }
 }

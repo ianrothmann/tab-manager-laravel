@@ -3,8 +3,6 @@
 namespace StianScholtz\TabManager\ServiceProviders;
 
 use Illuminate\Routing\Router;
-use Illuminate\Session\Middleware\AuthenticateSession;
-use Illuminate\Session\Middleware\StartSession;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use StianScholtz\TabManager\Middleware\TabManagerMiddleware;
@@ -21,7 +19,7 @@ class TabManagerServiceProvider extends PackageServiceProvider
 
     public function packageRegistered()
     {
-        if (! $this->app->resolved('tab-manager')) {
+        if (!$this->app->resolved('tab-manager')) {
             $this->app->singleton('tab-manager', function () {
                 return new TabManagerService();
             });
@@ -43,12 +41,13 @@ class TabManagerServiceProvider extends PackageServiceProvider
 
         $router->pushMiddlewareToGroup('web', TabManagerMiddleware::class);
 
-        //Set priority to ensure the middleware executes after the session have been initialized and authenticated
-        $router->middlewarePriority = [
-            StartSession::class,
-            AuthenticateSession::class,
-            TabManagerMiddleware::class,
-        ];
+//        TODO: Below code might no longer be needed. Leave it here until testing is completed.
+//        Set priority to ensure the middleware executes after the session have been initialized and authenticated
+//        $router->middlewarePriority = [
+//            StartSession::class,
+//            AuthenticateSession::class,
+//            TabManagerMiddleware::class,
+//        ];
     }
 
     /**
