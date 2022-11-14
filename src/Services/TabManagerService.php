@@ -123,7 +123,7 @@ class TabManagerService
      */
     public function getLatestForCurrentURL(): ?array
     {
-        return $this->getLatestByPath(request()->path());
+        return $this->getLatestByPath(request()->path() ?? '');
     }
 
     /**
@@ -133,7 +133,7 @@ class TabManagerService
     {
         $prevUrl = \URL::previous();
 
-        if (!$prevUrl || !($path = parse_url($prevUrl)['path'] ?? null)) {
+        if (!$prevUrl || !($path = parse_url($prevUrl)['path'] ?? '')) {
             return null;
         }
 
@@ -155,7 +155,11 @@ class TabManagerService
                 return $tab['last_accessed_at'];
             })
             ->first(function ($tab) use ($path) {
-                $urlPath = parse_url($tab['url'])['path'];
+                $urlPath = parse_url($tab['url'], PHP_URL_PATH);
+
+                if(!$urlPath) {
+                    return $path === '';
+                }
 
                 return $path === trim($urlPath, '/');
             });
