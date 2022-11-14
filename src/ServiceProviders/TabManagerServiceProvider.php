@@ -19,7 +19,7 @@ class TabManagerServiceProvider extends PackageServiceProvider
 
     public function packageRegistered()
     {
-        if (!$this->app->resolved('tab-manager')) {
+        if (! $this->app->resolved('tab-manager')) {
             $this->app->singleton('tab-manager', function () {
                 return new TabManagerService();
             });

@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('tab_manager')) {
+if (! function_exists('tab_manager')) {
     function tab_manager($key = null)
     {
         $instance = app('tab-manager');
