@@ -133,7 +133,7 @@ class TabManagerService
     {
         $prevUrl = \URL::previous();
 
-        if (!$prevUrl || !($path = parse_url($prevUrl)['path'] ?? '')) {
+        if (!$prevUrl || !($path = parse_url($prevUrl, PHP_URL_PATH) ?? '')) {
             return null;
         }
 
