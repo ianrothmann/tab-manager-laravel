@@ -157,7 +157,7 @@ class TabManagerService
             ->first(function ($tab) use ($path) {
                 $urlPath = parse_url($tab['url'], PHP_URL_PATH);
 
-                if(!$urlPath) {
+                if (!$urlPath) {
                     return $path === '';
                 }
 
