@@ -1,17 +1,16 @@
 {
-    "name": "stianscholtz/tab-manager-laravel",
+    "name": "eawardie/tab-manager-laravel",
     "description": "This is a Laravel package used to manage browser tab specific session data",
     "keywords": [
-        "Stian-Scholtz",
+        "EA-Wardie",
         "laravel",
         "tab-manager-laravel"
     ],
-    "homepage": "https://github.com/stian-scholtz/tab-manager-laravel",
+    "homepage": "https://github.com/EA-Wardie/tab-manager-laravel-php8",
     "license": "MIT",
     "authors": [
         {
-            "name": "Stian Scholtz",
-            "email": "stian678@gmail.com",
+            "name": "Wardie van Tonder",
             "role": "Developer"
         }
     ],
@@ -33,13 +32,13 @@
     },
     "autoload": {
         "psr-4": {
-            "StianScholtz\\TabManager\\": "src",
-            "StianScholtz\\TabManager\\Database\\Factories\\": "database/factories"
+            "Eawardie\\TabManager\\": "src",
+            "Eawardie\\TabManager\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "StianScholtz\\TabManager\\Tests\\": "tests"
+            "Eawardie\\TabManager\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -58,10 +57,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "StianScholtz\\TabManager\\ServiceProviders\\TabManagerServiceProvider"
+                "Eawardie\\TabManager\\ServiceProviders\\TabManagerServiceProvider"
             ],
             "aliases": {
-                "TabManager": "StianScholtz\\TabManager\\Facades\\TabManager"
+                "TabManager": "Eawardie\\TabManager\\Facades\\TabManager"
             }
         }
     },
