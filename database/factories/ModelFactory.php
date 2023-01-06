@@ -1,6 +1,6 @@
 <?php
 
-namespace StianScholtz\TabManager\Database\Factories;
+namespace Eawardie\TabManager\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace StianScholtz\TabManager\Facades;
+namespace Eawardie\TabManager\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \StianScholtz\TabManager\Services\TabManagerService
+ * @see \Eawardie\TabManager\Services\TabManagerService
  */
 class TabManager extends Facade
 {

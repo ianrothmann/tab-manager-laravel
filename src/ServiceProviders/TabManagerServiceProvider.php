@@ -1,12 +1,12 @@
 <?php
 
-namespace StianScholtz\TabManager\ServiceProviders;
+namespace Eawardie\TabManager\ServiceProviders;
 
 use Illuminate\Routing\Router;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use StianScholtz\TabManager\Middleware\TabManagerMiddleware;
-use StianScholtz\TabManager\Services\TabManagerService;
+use Eawardie\TabManager\Middleware\TabManagerMiddleware;
+use Eawardie\TabManager\Services\TabManagerService;
 
 class TabManagerServiceProvider extends PackageServiceProvider
 {

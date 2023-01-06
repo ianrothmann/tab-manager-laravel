@@ -1,10 +1,10 @@
 <?php
 
-namespace StianScholtz\TabManager\Tests;
+namespace Eawardie\TabManager\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use StianScholtz\TabManager\ServiceProviders\TabManagerServiceProvider;
+use Eawardie\TabManager\ServiceProviders\TabManagerServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -14,7 +14,7 @@ class TestCase extends Orchestra
 
         Factory::guessFactoryNamesUsing(
             function (string $modelName) {
-                return 'StianScholtz\\TabManager\\Database\\Factories\\'.class_basename($modelName).'Factory';
+                return 'Eawardie\\TabManager\\Database\\Factories\\'.class_basename($modelName).'Factory';
             }
         );
     }

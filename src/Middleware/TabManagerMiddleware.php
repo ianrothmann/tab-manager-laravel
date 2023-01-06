@@ -1,10 +1,10 @@
 <?php
 
-namespace StianScholtz\TabManager\Middleware;
+namespace Eawardie\TabManager\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use StianScholtz\TabManager\Facades\TabManager;
+use Eawardie\TabManager\Facades\TabManager;
 
 class TabManagerMiddleware
 {

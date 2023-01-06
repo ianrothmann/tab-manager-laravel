@@ -1,6 +1,6 @@
 <?php
 
-namespace StianScholtz\TabManager\Services;
+namespace Eawardie\TabManager\Services;
 
 use Illuminate\Session\SessionManager;
 use Illuminate\Session\Store;
