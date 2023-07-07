@@ -1,16 +1,15 @@
 {
-    "name": "eawardie/tab-manager-laravel",
+    "name": "ianrothmann/tab-manager-laravel",
     "description": "This is a Laravel package used to manage browser tab specific session data",
     "keywords": [
-        "EA-Wardie",
         "laravel",
         "tab-manager-laravel"
     ],
-    "homepage": "https://github.com/EA-Wardie/tab-manager-laravel-php8",
+    "homepage": "https://github.com/ianrothmann/tab-manager-laravel",
     "license": "MIT",
     "authors": [
         {
-            "name": "Wardie van Tonder",
+            "name": "Ian Rothmann",
             "role": "Developer"
         }
     ],
