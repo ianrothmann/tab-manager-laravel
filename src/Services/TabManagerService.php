@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 class TabManagerService
 {
     private string $key;
-    private ?string $tabId;
+    private $tabId;
 
     public function __construct()
     {
